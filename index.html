@@ -13,6 +13,14 @@
             height: 100vh;
             margin: 0;
             background: #f4f4f9;
+            overflow: hidden;
+            animation: backgroundAnimation 10s infinite alternate;
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background: #f4f4f9; }
+            50% { background: #e0f7fa; }
+            100% { background: #f4f4f9; }
         }
 
         .calculator {
@@ -21,6 +29,12 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             width: 300px;
             padding: 20px;
+            animation: popUp 0.5s ease-out;
+        }
+
+        @keyframes popUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         .display {
@@ -32,6 +46,12 @@
             text-align: right;
             overflow-x: auto;
             white-space: nowrap;
+            animation: highlight 1s infinite alternate;
+        }
+
+        @keyframes highlight {
+            0% { box-shadow: 0 0 10px rgba(0, 0, 0, 0); }
+            100% { box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); }
         }
 
         .buttons {
@@ -48,11 +68,12 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.1s;
         }
 
         button:hover {
             background: #0056b3;
+            transform: scale(1.1);
         }
 
         .operator {
@@ -73,10 +94,26 @@
 
         .equal {
             background: #28a745;
+            animation: pulse 1s infinite;
         }
 
         .equal:hover {
             background: #218838;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 10px rgba(40, 167, 69, 0.5); }
+            100% { box-shadow: 0 0 20px rgba(40, 167, 69, 1); }
+        }
+
+        @keyframes calculateAnimation {
+            0% { transform: scale(1); background-color: #28a745; }
+            50% { transform: scale(1.1); background-color: #34d058; }
+            100% { transform: scale(1); background-color: #28a745; }
+        }
+
+        .equal:active {
+            animation: calculateAnimation 0.3s ease-out;
         }
     </style>
 </head>
@@ -128,6 +165,8 @@
                 display.textContent = 'Error';
             }
         }
+
+        // Handle keyboard input
         document.addEventListener('keydown', (event) => {
             const allowedKeys = '0123456789+-*/().';
             const key = event.key;
